@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+body {
+    @apply bg-gray-200 h-[100vh] flex flex-col items-stretch;
+}
+
+#root {
+    @apply flex-1 flex flex-col;
+}
