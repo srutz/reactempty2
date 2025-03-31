@@ -1,7 +1,6 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import { MdArrowDropDown, MdArrowRight } from "react-icons/md";
 import { AnimatePresence, motion } from "motion/react";
-import { getWikipediaExcerpt, WikipediaExcerpt } from "./WikiExcerpt";
 
 function Box({ title = "hello", children }: { title?: string; children: ReactNode }) {
     const [open, setOpen] = useState(true)
