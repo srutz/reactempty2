@@ -13,6 +13,9 @@ export type Tile = {
     id: number
     index: number // index in the image (image rect)
     order: number // order in which the tiles are displayed
+    rotation: number
+    scale: number
+    delay: number
 }
 
 export type GridImageProps = {
@@ -41,6 +44,9 @@ export function GridImage(props: GridImageProps) {
         id: i + 1,
         index: i,
         order: i,
+        rotation: 0,
+        scale: 1,
+        delay: 0,
     } satisfies Tile)))
     const [animationStep, setAnimationStep] = useState(0)
 
@@ -48,13 +54,55 @@ export function GridImage(props: GridImageProps) {
         const timer = setInterval(() => {
             const newTiles = [...tiles]
             const order = Array.from(Array(tiles.length).keys()).map(i => i)
-            if (animationStep % 2 != 0) {
-                shuffle(order)
-            }
-            newTiles.forEach((tile, i) => tile.order = order[i])
+            const delays = Array.from(Array(tiles.length)).fill(0)
+            const rotations = Array.from(Array(tiles.length)).fill(0)
+            const scales = Array.from(Array(tiles.length)).fill(1)
+            const funcs = [
+                () => { },
+                () => { shuffle(order) },
+                () => { },
+                () => {
+                    for (let i = 0, n = delays.length; i < n; i++) {
+                        const row = Math.floor(i / columns)
+                        delays[i] = 20 + i * 6
+                        rotations[i] = row % 2 == 0 ? 180 : -180
+                    }
+                },
+                () => { },
+                () => {  
+                    const rowOrder = Array.from(Array(rows).keys()).map(i => i)
+                    shuffle(rowOrder)
+                    // shuffle the rows
+                    for (let i = 0; i < rows; i++) {
+                        const row = rowOrder[i]
+                        for (let j = 0; j < columns; j++) {
+                            const index = row * columns + j
+                            const newIndex = i * columns + j
+                            order[index] = newIndex
+                        }
+                    }
+                },
+                () => { },
+                () => {
+                    for (let i = 0, n = delays.length; i < n; i++) {
+                        const row = Math.floor(i / columns)
+                        delays[i] = 20 + i * 6
+                        rotations[i] = row % 2 == 0 ? 180 : -180
+                        scales[i] = 0
+                    }
+                },
+            ]
+            const step = animationStep % funcs.length
+            funcs[step]()
+            newTiles.forEach((tile, i) => {
+                tile.order = order[i]
+                tile.rotation = rotations[i]
+                tile.delay = delays[i]
+                tile.scale = scales[i]
+            })
             setTiles(newTiles)
             setAnimationStep(animationStep + 1)
-        }, 2_000)
+        }, 1_000)
         return () => clearInterval(timer)
     }, [animationStep])
 
@@ -79,7 +127,9 @@ export function GridImage(props: GridImageProps) {
             height: tileheight + 'px',
             backgroundPosition: `-${tx * tilewidth}px -${ty * tileheight}px`,
             backgroundSize: `${width}px ${height}px`,
-            backgroundImage: "url(" + imageUrl + ")"
+            backgroundImage: "url(" + imageUrl + ")",
+            transitionDelay: tile.delay + "ms",
+            transform: `rotate(${tile.rotation}deg) scale(${tile.scale})`,
         } satisfies CSSProperties
     }
 
