@@ -1,7 +1,10 @@
+import { QuestionsPanel } from "./Question";
 
 export function App() {
     return (
-        <div className="text-4xl">Hello World</div>
+        <div className="flex flex-col gap-4">
+            <QuestionsPanel></QuestionsPanel>
+        </div>
     )
 }
 
