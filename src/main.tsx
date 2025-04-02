@@ -4,6 +4,7 @@ import './index.css'
 import { App } from './App.tsx'
 import { createBrowserRouter, RouterProvider, useLoaderData, useSearchParams } from 'react-router'
 import * as motion from "motion/react-client"
+import { Form1 } from './Form1.tsx'
 
 function PageWrapper({ children }: { children: ReactNode }) {
     return (
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
             { 
                 path: "/", 
                 element: <Home></Home>,
+            },
+            { 
+                path: "/form1", 
+                element: <Form1/>,
             },
             { 
                 path: "/about", 

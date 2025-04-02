@@ -7,6 +7,7 @@ export function Menubar() {
             <div className="select-none" >MY APP</div>
             <div className="grow"></div>
             <NavLink to="/">Home</NavLink> 
+            <NavLink to="/form1">Form1</NavLink> 
             <NavLink to="/about">About</NavLink> 
         </div>
     )
