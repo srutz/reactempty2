@@ -2,9 +2,9 @@ import { ReactNode, StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { App } from './App.tsx'
-import { createBrowserRouter, RouterProvider, useLoaderData, useSearchParams } from 'react-router'
+import { createBrowserRouter, RouterProvider } from 'react-router'
 import * as motion from "motion/react-client"
-import { Form1 } from './Form1.tsx'
+import { Form1, Form2 } from './Form1.tsx'
 
 function PageWrapper({ children }: { children: ReactNode }) {
     return (
@@ -58,6 +58,10 @@ const router = createBrowserRouter([
             { 
                 path: "/form1", 
                 element: <Form1/>,
+            },
+            { 
+                path: "/form2", 
+                element: <Form2/>,
             },
             { 
                 path: "/about", 
