@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet } from "react-router";
+import { NavLink, Outlet } from "react-router";
 
 export function Menubar() {
     return (
@@ -11,6 +11,7 @@ export function Menubar() {
         </div>
     )
 }
+
 
 export function App() {
     return (
