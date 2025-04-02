@@ -1,4 +1,4 @@
-import React, { ReactNode, StrictMode } from 'react'
+import { ReactNode, StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { App } from './App.tsx'
@@ -18,6 +18,7 @@ function PageWrapper({ children }: { children: ReactNode }) {
             className="overflow-hidden grow flex flex-col p-2">{children}</motion.div>
     )
 }
+
 
 function Home() {
     return (

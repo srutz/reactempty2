@@ -1,8 +1,21 @@
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+
+
+export function useStateWithStorage<T>(key: string, initialValue: T) {
+    const [state, setState] = useState<T>(() => {
+        const raw = sessionStorage.getItem(key)
+        return raw ? JSON.parse(raw) : initialValue
+    })
+    useEffect(() => {
+        sessionStorage.setItem(key, JSON.stringify(state))
+    }, [state ])
+    return [ state, setState ] as const
+}
+
 
 export function Form1() {
-    const [form,setForm] = useState({
+    const [form,setForm] = useStateWithStorage("form1",{
         lastName: "",
         firstName: "",
         email: "",
